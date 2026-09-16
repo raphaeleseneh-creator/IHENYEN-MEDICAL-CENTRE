@@ -1,0 +1,6 @@
+{
+  "name": "Ihenyen Medical Centre",
+  "description": "A calm, premium, and patient-focused hospital website for Ihenyen Medical Centre in Benin City, Nigeria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
