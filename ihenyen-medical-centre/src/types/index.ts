@@ -20,6 +20,8 @@ export interface HospitalInfo {
   contact: {
     mainPhone: string;
     mainPhoneDisplay: string;
+    secondaryPhone: string;
+    secondaryPhoneDisplay: string;
     emergencyPhone: string;
     emergencyPhoneDisplay: string;
     whatsappNumber: string;

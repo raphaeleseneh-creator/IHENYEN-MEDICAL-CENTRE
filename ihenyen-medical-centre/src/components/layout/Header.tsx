@@ -68,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
           <p className="flex items-center gap-2 truncate">
             <span className="w-2 h-2 rounded-full bg-white animate-pulse shrink-0" />
             <span>Need urgent medical assistance?</span>
-            <span className="hidden md:inline">Call our 24/7 triage:</span>
+            <span className="hidden md:inline">Call reception now:</span>
             <a
               href={`tel:${hospitalInfo.contact.emergencyPhone}`}
               className="underline hover:text-red-100 font-bold ml-1"
@@ -80,10 +80,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
           <a
             href={`tel:${hospitalInfo.contact.emergencyPhone}`}
             className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#c83b3b] transition-colors text-xs font-bold whitespace-nowrap focus:outline-none"
-            aria-label="Call Hospital Emergency Line"
+            aria-label="Call Ihenyen Medical Centre"
           >
             <Phone className="w-3 h-3" />
-            <span>24/7 Triage</span>
+            <span>Call Now</span>
           </a>
         </div>
       </div>
@@ -190,7 +190,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 className="px-4 py-3 text-base font-semibold rounded-xl text-[#c83b3b] hover:bg-red-50 flex items-center gap-2"
               >
                 <AlertCircle className="w-5 h-5" />
-                <span>24/7 Emergency Care</span>
+                <span>Urgent Care Guidance</span>
               </Link>
             </nav>
 

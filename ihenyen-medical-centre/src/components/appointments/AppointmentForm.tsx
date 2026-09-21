@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, CheckCircle, AlertTriangle, Clock, Phone, MessageSquare, Mail, Shield, User } from 'lucide-react';
 import { draftServices, hospitalInfo } from '../../data/hospitalConfig';
 import { AppointmentSubmission } from '../../types';
+import { formEndpoints, submitJson } from '../../lib/submitForm';
 
 interface AppointmentFormProps {
   initialServiceId?: string;
@@ -29,7 +30,19 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [bookingRef, setBookingRef] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  const updateField = <K extends keyof AppointmentSubmission>(
+    field: K,
+    value: AppointmentSubmission[K],
+  ) => {
+    setFormData((current) => ({ ...current, [field]: value }));
+  };
+
+  useEffect(() => {
+    if (isSuccess) successHeadingRef.current?.focus();
+  }, [isSuccess]);
 
   // Min date is tomorrow
   const tomorrow = new Date();
@@ -48,7 +61,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
     const cleanPhone = formData.phone.replace(/[\s-]/g, '');
     if (!cleanPhone) {
       newErrors.phone = 'Telephone number is required.';
-    } else if (cleanPhone.length < 11) {
+    } else if (!phoneRegex.test(cleanPhone)) {
       newErrors.phone = 'Please enter a valid telephone number (e.g., 0803 000 0000).';
     }
 
@@ -65,7 +78,15 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+
+    if (!isValid) {
+      window.requestAnimationFrame(() => {
+        formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      });
+    }
+
+    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -74,31 +95,21 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
     setIsSubmitting(true);
 
-    // Mock API processing delay
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
-
-      const generatedRef = `IMC-${Math.floor(100000 + Math.random() * 900000)}`;
-      setBookingRef(generatedRef);
-
-      const submissionRecord = {
+      await submitJson(formEndpoints.appointment, {
         ...formData,
-        id: generatedRef,
-        createdAt: new Date().toISOString(),
-        status: 'pending',
-      };
-
-      // Store in client-side persistence for immediate user reference
-      try {
-        const existing = JSON.parse(localStorage.getItem('imc_appointments') || '[]');
-        localStorage.setItem('imc_appointments', JSON.stringify([submissionRecord, ...existing]));
-      } catch (err) {
-        console.warn('LocalStorage not available in this context:', err);
-      }
+        submittedAt: new Date().toISOString(),
+        source: 'website-appointment-form',
+      });
 
       setIsSuccess(true);
     } catch (err) {
-      setErrors({ form: 'An unexpected error occurred. Please call the reception desk.' });
+      setErrors({
+        form:
+          err instanceof Error
+            ? err.message
+            : 'We could not send your request. Please contact the hospital directly.',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -116,7 +127,11 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           <CheckCircle className="w-10 h-10" />
         </div>
 
-        <h3 className="text-2xl font-bold text-[#083b78] mb-2 font-heading">
+        <h3
+          ref={successHeadingRef}
+          tabIndex={-1}
+          className="text-2xl font-bold text-[#083b78] mb-2 font-heading focus:outline-none"
+        >
           Appointment Request Received
         </h3>
 
@@ -125,10 +140,6 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         </p>
 
         <div className="bg-[#edf5fc] border border-[#d8e3ec] rounded-xl p-4 max-w-md mx-auto text-left space-y-2 mb-6">
-          <div className="flex justify-between text-xs text-[#5f6f7f]">
-            <span>Reference Code:</span>
-            <span className="font-mono font-bold text-[#083b78] text-sm">{bookingRef}</span>
-          </div>
           <div className="flex justify-between text-xs text-[#5f6f7f]">
             <span>Service:</span>
             <span className="font-semibold text-[#10243e]">{selectedService?.title || 'General Consultation'}</span>
@@ -146,7 +157,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 text-left max-w-md mx-auto mb-6 flex items-start gap-2.5">
           <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
           <span>
-            <strong>Need Immediate Care?</strong> If you are experiencing sudden severe symptoms, do not wait for appointment confirmation. Proceed directly to our 24/7 Emergency unit or call{' '}
+            <strong>Need Immediate Care?</strong> If you are experiencing sudden severe symptoms, do not wait for appointment confirmation. Call immediately or proceed to the nearest emergency facility:{' '}
             <a href={`tel:${hospitalInfo.contact.emergencyPhone}`} className="font-bold underline">
               {hospitalInfo.contact.emergencyPhoneDisplay}
             </a>.
@@ -188,6 +199,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
   return (
     <form
+      ref={formRef}
       onSubmit={handleSubmit}
       noValidate
       className={`bg-white border border-[#d8e3ec] rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 ${className}`}
@@ -203,7 +215,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           Schedule a Hospital Visit
         </h3>
         <p className="text-xs sm:text-sm text-[#5f6f7f] mt-1">
-          Complete this straightforward form. Our desk will contact you to confirm the exact consultation schedule.
+          Once online booking is connected, use this form to request a consultation time. A request is not a confirmed appointment.
         </p>
       </div>
 
@@ -211,17 +223,31 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
       <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800 flex items-start gap-2.5">
         <AlertTriangle className="w-4 h-4 text-[#c83b3b] flex-shrink-0 mt-0.5" />
         <span>
-          <strong>Emergency Warning:</strong> Do not use this form for acute trauma, severe chest pain, or sudden breathing distress. Call{' '}
+          <strong>Urgent Warning:</strong> Do not use this form for acute trauma, severe chest pain, or sudden breathing distress. Call{' '}
           <a href={`tel:${hospitalInfo.contact.emergencyPhone}`} className="font-bold underline text-[#c83b3b]">
             {hospitalInfo.contact.emergencyPhoneDisplay}
           </a>{' '}
-          or visit our emergency room immediately.
+          or go to the nearest emergency facility immediately.
         </span>
       </div>
 
+      {!formEndpoints.appointment && (
+        <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">
+          <strong>Online booking is not active yet.</strong> This form will be enabled after the hospital’s secure appointment service is connected. Do not enter patient information here yet.
+        </div>
+      )}
+
+      <fieldset disabled={!formEndpoints.appointment} className="space-y-6 disabled:opacity-60">
+
       {errors.form && (
-        <div className="p-3 bg-red-100 text-red-800 rounded-lg text-xs font-medium">
+        <div role="alert" aria-live="assertive" className="p-3 bg-red-100 text-red-800 rounded-lg text-xs font-medium">
           {errors.form}
+        </div>
+      )}
+
+      {Object.keys(errors).some((key) => key !== 'form') && (
+        <div role="alert" aria-live="assertive" className="p-3 rounded-xl border border-red-200 bg-red-50 text-xs font-medium text-red-800">
+          Please correct the highlighted fields before sending your appointment request.
         </div>
       )}
 
@@ -233,7 +259,8 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
-            onClick={() => setFormData({ ...formData, patientType: 'new' })}
+            onClick={() => updateField('patientType', 'new')}
+            aria-pressed={formData.patientType === 'new'}
             className={`py-2.5 px-4 rounded-xl text-sm font-semibold border flex items-center justify-center gap-2 transition-all ${
               formData.patientType === 'new'
                 ? 'bg-[#edf5fc] border-[#0f6bd9] text-[#083b78] shadow-xs'
@@ -246,7 +273,8 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
           <button
             type="button"
-            onClick={() => setFormData({ ...formData, patientType: 'returning' })}
+            onClick={() => updateField('patientType', 'returning')}
+            aria-pressed={formData.patientType === 'returning'}
             className={`py-2.5 px-4 rounded-xl text-sm font-semibold border flex items-center justify-center gap-2 transition-all ${
               formData.patientType === 'returning'
                 ? 'bg-[#edf5fc] border-[#0f6bd9] text-[#083b78] shadow-xs'
@@ -268,15 +296,19 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           </label>
           <input
             id="fullName"
+            name="fullName"
             type="text"
+            autoComplete="name"
             value={formData.fullName}
-            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            onChange={(e) => updateField('fullName', e.currentTarget.value)}
             placeholder="e.g. Osasere Ihenyen"
+            aria-invalid={Boolean(errors.fullName)}
+            aria-describedby={errors.fullName ? 'fullName-error' : undefined}
             className={`w-full px-4 py-2.5 rounded-xl border text-sm text-[#10243e] focus:outline-none focus:ring-2 focus:ring-[#0f6bd9] transition-colors ${
               errors.fullName ? 'border-red-500 bg-red-50/30' : 'border-[#d8e3ec] bg-white'
             }`}
           />
-          {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
+          {errors.fullName && <p id="fullName-error" className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
         </div>
 
         {/* Telephone Number */}
@@ -286,15 +318,20 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           </label>
           <input
             id="phone"
+            name="phone"
             type="tel"
+            autoComplete="tel"
+            inputMode="tel"
             value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            onChange={(e) => updateField('phone', e.currentTarget.value)}
             placeholder="e.g. 0803 123 4567"
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone ? 'phone-error' : undefined}
             className={`w-full px-4 py-2.5 rounded-xl border text-sm text-[#10243e] focus:outline-none focus:ring-2 focus:ring-[#0f6bd9] transition-colors ${
               errors.phone ? 'border-red-500 bg-red-50/30' : 'border-[#d8e3ec] bg-white'
             }`}
           />
-          {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
+          {errors.phone && <p id="phone-error" className="text-xs text-red-600 mt-1">{errors.phone}</p>}
         </div>
       </div>
 
@@ -305,15 +342,20 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         </label>
         <input
           id="email"
+          name="email"
           type="email"
+          autoComplete="email"
+          spellCheck={false}
           value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onChange={(e) => updateField('email', e.currentTarget.value)}
           placeholder="e.g. name@example.com"
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? 'email-error' : undefined}
           className={`w-full px-4 py-2.5 rounded-xl border text-sm text-[#10243e] focus:outline-none focus:ring-2 focus:ring-[#0f6bd9] transition-colors ${
             errors.email ? 'border-red-500 bg-red-50/30' : 'border-[#d8e3ec] bg-white'
           }`}
         />
-        {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
+        {errors.email && <p id="email-error" className="text-xs text-red-600 mt-1">{errors.email}</p>}
       </div>
 
       {/* 3. Service Selection */}
@@ -323,8 +365,9 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         </label>
         <select
           id="serviceId"
+          name="serviceId"
           value={formData.serviceId}
-          onChange={(e) => setFormData({ ...formData, serviceId: e.target.value })}
+          onChange={(e) => updateField('serviceId', e.currentTarget.value)}
           className="w-full px-4 py-2.5 rounded-xl border border-[#d8e3ec] bg-white text-sm text-[#10243e] focus:outline-none focus:ring-2 focus:ring-[#0f6bd9]"
         >
           {draftServices.map((service) => (
@@ -344,15 +387,18 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           </label>
           <input
             id="preferredDate"
+            name="preferredDate"
             type="date"
             min={minDateString}
             value={formData.preferredDate}
-            onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
+            aria-invalid={Boolean(errors.preferredDate)}
+            aria-describedby={errors.preferredDate ? 'preferredDate-error' : undefined}
+            onChange={(e) => updateField('preferredDate', e.currentTarget.value)}
             className={`w-full px-4 py-2.5 rounded-xl border text-sm text-[#10243e] focus:outline-none focus:ring-2 focus:ring-[#0f6bd9] ${
               errors.preferredDate ? 'border-red-500 bg-red-50/30' : 'border-[#d8e3ec] bg-white'
             }`}
           />
-          {errors.preferredDate && <p className="text-xs text-red-600 mt-1">{errors.preferredDate}</p>}
+          {errors.preferredDate && <p id="preferredDate-error" className="text-xs text-red-600 mt-1">{errors.preferredDate}</p>}
         </div>
 
         {/* Time Slot */}
@@ -362,13 +408,9 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           </label>
           <select
             id="preferredTimeSlot"
+            name="preferredTimeSlot"
             value={formData.preferredTimeSlot}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                preferredTimeSlot: e.target.value as 'morning' | 'afternoon' | 'evening',
-              })
-            }
+            onChange={(e) => updateField('preferredTimeSlot', e.currentTarget.value as 'morning' | 'afternoon' | 'evening')}
             className="w-full px-4 py-2.5 rounded-xl border border-[#d8e3ec] bg-white text-sm text-[#10243e] focus:outline-none focus:ring-2 focus:ring-[#0f6bd9]"
           >
             <option value="morning">Morning (8:00 AM – 12:00 PM)</option>
@@ -395,12 +437,8 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
               <button
                 key={item.id}
                 type="button"
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    preferredContact: item.id as 'phone' | 'whatsapp' | 'email',
-                  })
-                }
+                aria-pressed={isSelected}
+                onClick={() => updateField('preferredContact', item.id as 'phone' | 'whatsapp' | 'email')}
                 className={`py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold border flex flex-col sm:flex-row items-center justify-center gap-1.5 transition-all ${
                   isSelected
                     ? 'bg-[#edf5fc] border-[#0f6bd9] text-[#083b78]'
@@ -420,8 +458,11 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         <label className="flex items-start gap-3 cursor-pointer select-none">
           <input
             type="checkbox"
+            name="hasConsent"
             checked={formData.hasConsent}
-            onChange={(e) => setFormData({ ...formData, hasConsent: e.target.checked })}
+            aria-invalid={Boolean(errors.hasConsent)}
+            aria-describedby={errors.hasConsent ? 'consent-error' : undefined}
+            onChange={(e) => updateField('hasConsent', e.currentTarget.checked)}
             className="mt-1 w-4 h-4 rounded text-[#0f6bd9] focus:ring-[#0f6bd9] border-[#d8e3ec]"
           />
           <span className="text-xs text-[#5f6f7f] leading-relaxed">
@@ -432,28 +473,29 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
             . I understand this form is for appointment scheduling and does not submit medical records or replace clinical evaluation.
           </span>
         </label>
-        {errors.hasConsent && <p className="text-xs text-red-600 mt-1">{errors.hasConsent}</p>}
+        {errors.hasConsent && <p id="consent-error" className="text-xs text-red-600 mt-1">{errors.hasConsent}</p>}
       </div>
 
       {/* Submit Button */}
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !formEndpoints.appointment}
         className="w-full py-3.5 px-6 rounded-xl bg-[#0f6bd9] hover:bg-[#083b78] text-white text-base font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-70"
         id="submit-appointment-button"
       >
         {isSubmitting ? (
           <>
             <Clock className="w-5 h-5 animate-spin" />
-            <span>Processing Request...</span>
+            <span>Sending Request…</span>
           </>
         ) : (
           <>
             <Calendar className="w-5 h-5" />
-            <span>Request Appointment</span>
+            <span>{formEndpoints.appointment ? 'Request Appointment' : 'Online Booking Coming Soon'}</span>
           </>
         )}
       </button>
+      </fieldset>
     </form>
   );
 };

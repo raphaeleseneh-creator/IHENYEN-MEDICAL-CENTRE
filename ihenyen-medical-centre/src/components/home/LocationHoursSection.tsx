@@ -16,10 +16,10 @@ export const LocationHoursSection: React.FC = () => {
             Location & Accessibility
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#083b78] font-heading">
-            Conveniently located in central Benin City.
+            Visit us at Jemide Drive, Benin City.
           </h2>
           <p className="text-sm sm:text-base text-[#5f6f7f] mt-2">
-            Our medical centre is easily accessible by private vehicle or public transport from major roads across Edo State.
+            The centre is located at 4 Jemide Drive, Off Goodwill Street, Benin City, Edo State.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ export const LocationHoursSection: React.FC = () => {
                 >
                   <span className="flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 text-[#c83b3b]" />
-                    <span>24/7 Emergency Line:</span>
+                    <span>Urgent Care Guidance:</span>
                   </span>
                   <span>{hospitalInfo.contact.emergencyPhoneDisplay}</span>
                 </a>
@@ -84,6 +84,17 @@ export const LocationHoursSection: React.FC = () => {
                     <span>Main Reception:</span>
                   </span>
                   <span className="font-bold">{hospitalInfo.contact.mainPhoneDisplay}</span>
+                </a>
+
+                <a
+                  href={`tel:${hospitalInfo.contact.secondaryPhone}`}
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-white text-[#083b78] border border-[#d8e3ec] hover:bg-[#edf5fc]/60 transition-colors"
+                >
+                  <span className="flex items-center gap-2 font-medium">
+                    <Phone className="w-4 h-4 text-[#0f6bd9]" />
+                    <span>Second Line:</span>
+                  </span>
+                  <span className="font-bold">{hospitalInfo.contact.secondaryPhoneDisplay}</span>
                 </a>
 
                 <a
@@ -157,10 +168,10 @@ export const LocationHoursSection: React.FC = () => {
                   <span>Benin City Hospital Hub</span>
                 </div>
                 <h4 className="text-lg font-bold text-[#083b78] font-heading">
-                  Quick Access from Sapele Road & Ring Road
+                  Easy to find off Goodwill Street
                 </h4>
                 <p className="text-xs text-[#5f6f7f] mt-1 max-w-md">
-                  Convenient parking on premises, wheelchair-accessible patient entry, and dedicated emergency ambulance bay.
+                  Use the direction button for a quick Google Maps search to Jemide Drive in Benin City.
                 </p>
               </div>
 

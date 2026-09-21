@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X, Stethoscope, User, BookOpen, AlertCircle, ArrowRight } from 'lucide-react';
-import { draftServices, draftDoctors, healthArticles } from '../../data/hospitalConfig';
+import { draftServices, draftDoctors, healthArticles, hospitalInfo } from '../../data/hospitalConfig';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -63,10 +63,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   const matchingDoctors = trimmedQuery
     ? draftDoctors.filter(
         (d) =>
-          d.name.toLowerCase().includes(trimmedQuery) ||
-          d.specialty.toLowerCase().includes(trimmedQuery) ||
-          d.department.toLowerCase().includes(trimmedQuery) ||
-          d.biography.toLowerCase().includes(trimmedQuery)
+          d.isVerified &&
+          (d.name.toLowerCase().includes(trimmedQuery) ||
+            d.specialty.toLowerCase().includes(trimmedQuery) ||
+            d.department.toLowerCase().includes(trimmedQuery) ||
+            d.biography.toLowerCase().includes(trimmedQuery))
       )
     : [];
 
@@ -108,7 +109,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search medical services, doctors, symptoms, articles..."
+            placeholder="Search medical services, doctors, symptoms, articles…"
             className="w-full bg-transparent text-[#10243e] text-base placeholder-[#5f6f7f] focus:outline-none"
             aria-label="Search input"
           />
@@ -136,7 +137,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             <div className="py-8 text-center text-[#5f6f7f]">
               <p className="text-sm font-medium mb-3">Quick Search Suggestions:</p>
               <div className="flex flex-wrap justify-center gap-2">
-                {['Emergency Care', 'Maternity', 'Hypertension', 'Paediatrics', 'Ultrasound', 'Appointments'].map(
+                {['Urgent Care', 'Women’s Health', 'Dental Care', 'Headache', 'Hydration', 'Appointments'].map(
                   (suggestion) => (
                     <button
                       key={suggestion}
@@ -248,12 +249,12 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
         {/* Emergency Footnote in Search */}
         <div className="px-4 py-2.5 bg-[#edf5fc] border-t border-[#d8e3ec] flex items-center justify-between text-xs text-[#5f6f7f]">
-          <span>For acute medical emergencies, dial:</span>
+          <span>For urgent clinical concerns, call:</span>
           <a
-            href="tel:+2348009110000"
+            href={`tel:${hospitalInfo.contact.emergencyPhone}`}
             className="font-bold text-[#c83b3b] hover:underline"
           >
-            0800 911 0000 (24/7)
+            {hospitalInfo.contact.emergencyPhoneDisplay}
           </a>
         </div>
       </div>

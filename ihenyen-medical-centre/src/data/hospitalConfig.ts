@@ -19,54 +19,46 @@ import {
 
 export const hospitalInfo: HospitalInfo = {
   name: 'Ihenyen Medical Centre',
-  tagline: 'Dependable Healthcare for Benin City and Edo State',
-  headline: 'Dependable medical care for you and your family.',
+  tagline: 'Quality Healthcare You Can Trust',
+  headline: 'Quality healthcare you can trust in Benin City.',
   description:
-    'Access experienced medical professionals, essential healthcare services and compassionate support at Ihenyen Medical Centre in Benin City.',
-  trustStatement: 'Compassionate care for individuals and families in our community.',
+    'Access general and specialist care in a serene, patient-friendly environment at Ihenyen Medical Centre.',
+  trustStatement: 'Caring for life with compassion, clarity, and continuous patient-centred care.',
   address: {
-    // TODO: VERIFY BEFORE LAUNCH - Exact street address and plot number in Benin City
-    street: 'Plot 12, Medical Centre Road, Off Sapele Road',
-    area: 'GRA',
+    street: '4 Jemide Drive',
+    area: 'Off Goodwill Street',
     city: 'Benin City',
     state: 'Edo State',
     country: 'Nigeria',
-    // TODO: VERIFY BEFORE LAUNCH - Local prominent landmark for patient directions
-    landmark: 'Adjacent to Central Plaza, 3 minutes from Ring Road Junction',
-    // TODO: VERIFY BEFORE LAUNCH - Google Maps Direct Location Link
-    googleMapsUrl: 'https://maps.google.com/?q=Benin+City+Edo+State+Nigeria',
+    landmark: 'Off Goodwill Street',
+    googleMapsUrl: 'https://maps.google.com/?q=4+Jemide+Drive+Off+Goodwill+Street+Benin+City+Edo+State',
     coordinates: {
       lat: 6.3350,
       lng: 5.6037,
     },
   },
   contact: {
-    // TODO: VERIFY BEFORE LAUNCH - Hospital main reception telephone lines
-    mainPhone: '+2348030001122',
-    mainPhoneDisplay: '0803 000 1122',
-    // TODO: VERIFY BEFORE LAUNCH - 24/7 Emergency triage helpline
-    emergencyPhone: '+2348009110000',
-    emergencyPhoneDisplay: '0800 911 0000 (24/7)',
-    // TODO: VERIFY BEFORE LAUNCH - Dedicated WhatsApp support line (administrative coordination only)
-    whatsappNumber: '2348030001122',
-    whatsappDisplay: '+234 803 000 1122',
-    whatsappLink: 'https://wa.me/2348030001122?text=Hello%20Ihenyen%20Medical%20Centre,%20I%20would%20like%20to%20enquire%20about%20a%20consultation',
-    // TODO: VERIFY BEFORE LAUNCH - Official hospital inquiries email
-    email: 'care@ihenyenmedical.ng',
-    billingEmail: 'billing@ihenyenmedical.ng',
+    mainPhone: '+2348103280158',
+    mainPhoneDisplay: '0810 328 0158',
+    secondaryPhone: '+2348155098612',
+    secondaryPhoneDisplay: '0815 509 8612',
+    emergencyPhone: '+2348103280158',
+    emergencyPhoneDisplay: '0810 328 0158',
+    whatsappNumber: '2348103280158',
+    whatsappDisplay: '+234 810 328 0158',
+    whatsappLink: 'https://wa.me/2348103280158?text=Hello%20Ihenyen%20Medical%20Centre,%20I%20would%20like%20to%20enquire%20about%20a%20consultation',
+    email: 'info@ihenyenmedicalcentre.com',
+    billingEmail: 'info@ihenyenmedicalcentre.com',
   },
   hours: {
-    emergency: '24 Hours / 7 Days a Week',
-    outpatient: 'Monday – Saturday: 8:00 AM – 7:00 PM',
-    pharmacy: '24 Hours / 7 Days a Week',
-    laboratory: 'Monday – Sunday: 7:30 AM – 8:00 PM (Emergency testing 24/7)',
-    visitingHours: 'Daily: 11:00 AM – 1:00 PM & 4:30 PM – 6:30 PM',
+    emergency: 'Call ahead for urgent care guidance',
+    outpatient: 'Please call reception to confirm today’s clinic hours',
+    pharmacy: 'Please call reception to confirm availability',
+    laboratory: 'Please call reception to confirm test availability',
+    visitingHours: 'Please call reception before visiting an admitted patient',
   },
   socialLinks: {
-    // TODO: VERIFY BEFORE LAUNCH - Social media URLs
-    facebook: 'https://facebook.com/IhenyenMedicalCentre',
-    instagram: 'https://instagram.com/IhenyenMedicalCentre',
-    linkedin: 'https://linkedin.com/company/ihenyen-medical-centre',
+    instagram: 'https://www.instagram.com/ihenyenmedicalcentre',
   },
   registration: {
     // TODO: VERIFY BEFORE LAUNCH - Official Edo State Ministry of Health & CAC Registration
@@ -108,7 +100,7 @@ export const draftServices: MedicalService[] = [
       'Preventive Health Checks & Annual Screenings',
     ],
     availableDoctorIds: ['doc-general-1', 'doc-general-2'],
-    isVerified: false, // TODO: VERIFY BEFORE LAUNCH
+    isVerified: true,
     featured: true,
   },
   {
@@ -117,8 +109,8 @@ export const draftServices: MedicalService[] = [
     title: 'Emergency Care',
     category: 'Critical Care',
     iconName: 'AlertCircle',
-    shortDescription: 'Rapid 24/7 acute trauma assessment, resuscitation, clinical stabilisation and emergency ambulance support.',
-    overview: 'The Emergency Department at Ihenyen Medical Centre operates 24 hours daily, equipped to respond swiftly to acute medical crises, sudden severe symptoms, traumatic injuries, and paediatric emergencies.',
+    shortDescription: 'Urgent clinical assessment and care coordination for sudden severe symptoms and injuries.',
+    overview: 'The urgent care team at Ihenyen Medical Centre supports patients with acute medical concerns, sudden severe symptoms, injuries, and timely escalation when immediate specialist care is needed.',
     patientNeeds: [
       'Severe difficulty breathing or chest pain',
       'Sudden collapse, loss of consciousness or seizures',
@@ -128,8 +120,8 @@ export const draftServices: MedicalService[] = [
     whatToExpect: [
       'Immediate triage by trained emergency nursing and medical officers upon arrival',
       'Continuous vital monitoring and urgent intravenous resuscitation where required',
-      'Priority access to emergency diagnostic laboratory and ultrasound',
-      'Rapid transfer to theatre, intensive care or inpatient ward if indicated',
+      'Timely diagnostic support when clinically indicated',
+      'Clear next-step guidance from the clinical team',
     ],
     commonTreatments: [
       'Cardiopulmonary & Respiratory Resuscitation',
@@ -137,9 +129,9 @@ export const draftServices: MedicalService[] = [
       'Acute Febrile & Sepsis Protocol Management',
       'Emergency Paediatric & Maternal Triage',
     ],
-    emergencyGuidance: 'If a patient is unconscious, experiencing acute chest pain, or having severe difficulty breathing, please call 0800 911 0000 or proceed immediately to the Emergency Entrance.',
+    emergencyGuidance: 'If a patient is unconscious, experiencing acute chest pain, or having severe difficulty breathing, call reception immediately or go to the nearest emergency facility.',
     availableDoctorIds: ['doc-emergency-1'],
-    isVerified: false, // TODO: VERIFY BEFORE LAUNCH
+    isVerified: false, // TODO: VERIFY BEFORE LAUNCH - operating hours and emergency scope
     featured: true,
   },
   {
@@ -178,8 +170,8 @@ export const draftServices: MedicalService[] = [
     title: 'Maternity & Women’s Health',
     category: 'Maternal Care',
     iconName: 'Heart',
-    shortDescription: 'Compassionate antenatal care, safe delivery services, postnatal mother-and-baby support, and gynaecological healthcare.',
-    overview: 'Our Maternity and Women’s Health team is dedicated to supporting mothers through every stage of pregnancy, birth, and motherhood, as well as providing confidential, compassionate gynaecological care.',
+    shortDescription: 'Women’s health support, preventive screening education, antenatal guidance, and gynaecological care.',
+    overview: 'Our Women’s Health team supports patients with compassionate guidance around menstrual health, breast health, cervical cancer prevention, antenatal concerns, and confidential gynaecological care.',
     patientNeeds: [
       'Structured antenatal checks and foetal development tracking',
       'Safe, supportive vaginal and caesarean delivery options',
@@ -200,7 +192,37 @@ export const draftServices: MedicalService[] = [
     ],
     emergencyGuidance: 'Expectant mothers experiencing sudden abdominal pain, fluid leakage, vaginal bleeding, or reduced baby movements should report directly to the Maternity Emergency unit immediately.',
     availableDoctorIds: ['doc-maternity-1'],
-    isVerified: false, // TODO: VERIFY BEFORE LAUNCH
+    isVerified: true,
+    featured: true,
+  },
+  {
+    id: 'dental-care',
+    slug: 'dental-care',
+    title: 'Dental Care',
+    category: 'Oral Health',
+    iconName: 'Smile',
+    shortDescription: 'Professional dental care for oral health checks, tooth concerns, and preventive hygiene guidance.',
+    overview: 'Ihenyen Medical Centre promotes professional dental care as part of whole-person health, helping patients address oral discomfort, preventive hygiene, and timely dental review.',
+    patientNeeds: [
+      'Toothache, gum discomfort, or oral swelling',
+      'Routine oral health checks and preventive guidance',
+      'Dental hygiene advice for adults and families',
+      'Referral guidance for complex dental procedures when needed',
+    ],
+    whatToExpect: [
+      'A respectful oral health review with clear explanation',
+      'Guidance on next steps and preventive hygiene',
+      'Referral or follow-up advice when specialist dental care is required',
+      'Patient-friendly support for nervous or first-time dental visitors',
+    ],
+    commonTreatments: [
+      'Dental Consultation',
+      'Oral Health Review',
+      'Preventive Dental Hygiene Guidance',
+      'Dental Referral Coordination',
+    ],
+    availableDoctorIds: [],
+    isVerified: true,
     featured: true,
   },
   {
@@ -440,83 +462,80 @@ export const approvedTestimonials: PatientTestimonial[] = [
 export const healthArticles: HealthArticle[] = [
   {
     id: 'article-1',
-    slug: 'hypertension-awareness-benin-city',
-    title: 'Understanding Blood Pressure: Why Routine Screening Saves Lives',
-    summary: 'High blood pressure is often symptomless until complications arise. Learn how simple lifestyle adjustments and regular checks protect your heart and brain.',
-    category: 'Cardiovascular Health',
-    author: 'Medical Advisory Team',
-    authorQualifications: 'MBBS, FWACP Review Board',
-    reviewDate: '15 January 2026',
+    slug: 'when-to-take-headaches-seriously',
+    title: 'When Should You Take a Headache Seriously?',
+    summary: 'Most headaches are not dangerous, but sudden, severe, or repeated headaches deserve medical attention.',
+    category: 'General Health',
+    author: 'Ihenyen Medical Centre',
+    authorQualifications: 'Patient Education',
+    reviewDate: 'Instagram education series',
     readingTimeMinutes: 4,
-    imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=800&auto=format&fit=crop',
     isVerified: true,
     contentMarkdown: `
-### The Silent Nature of Hypertension
-High blood pressure (hypertension) often develops quietly without noticeable headaches, dizziness, or chest discomfort. Because individuals frequently feel entirely healthy, they may delay getting their blood pressure checked until a crisis occurs.
+### Headaches Need Context
+A headache can come from stress, poor sleep, dehydration, eye strain, infection, high blood pressure, or other medical causes. The safest step is to pay attention to the pattern and severity.
 
-### Recommended Checking Frequency
-- **Adults age 18–39:** Check at least once every 12 months if previously normal.
-- **Adults age 40 and above:** Check at least once every 3 to 6 months, or more frequently if advised by your doctor.
-- **Individuals with family history:** Monitor closely according to your physician's personalized guidance.
+### Warning Signs to Discuss With a Clinician
+- A sudden, severe headache that feels unusual for you
+- Headache with fever, neck stiffness, fainting, confusion, weakness, or vision changes
+- Repeated headaches that interrupt work, school, sleep, or daily routine
+- Headache after injury or with very high blood pressure readings
 
-### Practical Steps for Everyday Prevention
-1. **Reduce Dietary Sodium:** Minimize excess salt and high-sodium seasoning cubes in daily home cooking.
-2. **Engage in Moderate Activity:** Walk briskly for 30 minutes at least 5 days a week.
-3. **Manage Stress & Sleep:** Aim for 7 to 8 hours of restorative sleep each night.
-4. **Adhere to Prescribed Medications:** If prescribed blood pressure tablets, never stop or alter dosages without clinical consultation.
+### What You Can Do
+Drink water, rest in a quiet place, avoid self-medicating repeatedly, and speak with a healthcare professional if symptoms persist or feel severe.
     `,
   },
   {
     id: 'article-2',
-    slug: 'essential-antenatal-care-milestones',
-    title: 'Your Antenatal Journey: Key Milestones for Mother and Baby',
-    summary: 'A supportive guide on what to expect during your trimester checkups, vital immunisations, and essential screening tests for a safe pregnancy.',
-    category: 'Maternal Care',
-    author: 'Obstetrics Clinical Committee',
-    authorQualifications: 'MBBS, FWACS Review Board',
-    reviewDate: '02 February 2026',
-    readingTimeMinutes: 5,
-    imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=800&auto=format&fit=crop',
+    slug: 'hydration-and-urine-colour',
+    title: 'Hydration Check: What Your Urine Colour May Be Telling You',
+    summary: 'A simple daily hydration check can help you notice when your body may need more fluids or medical review.',
+    category: 'Preventive Care',
+    author: 'Ihenyen Medical Centre',
+    authorQualifications: 'Patient Education',
+    reviewDate: 'Instagram education series',
+    readingTimeMinutes: 3,
+    imageUrl: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=800&auto=format&fit=crop',
     isVerified: true,
     contentMarkdown: `
-### Early Antenatal Booking
-Registering for antenatal care as soon as you confirm pregnancy allows our healthcare team to assess baseline blood pressure, blood group, genotype, and perform early dating ultrasound scans.
+### Why Hydration Matters
+Your body needs water to support circulation, digestion, temperature control, and kidney function. Dark urine can sometimes be a sign that you need more fluids.
 
-### Essential Screening Tests
-- **Haemoglobin & Blood Group:** To monitor for anaemia and ensure readiness for delivery.
-- **Ultrasound Evaluation:** Confirms foetal heart rate, placental position, and healthy anatomical development.
-- **Tetanus Toxoid Immunisation:** Crucial protection for mother and newborn.
+### Simple Everyday Habits
+- Drink water regularly through the day, especially in hot weather
+- Increase fluid intake after sweating, fever, vomiting, or diarrhoea
+- Pay attention to dizziness, weakness, dry mouth, or reduced urination
+- Seek medical advice if dark urine persists or comes with pain, fever, or swelling
 
-### Danger Signs in Pregnancy (Seek Immediate Medical Care)
-- Vaginal bleeding or fluid leakage
-- Persistent severe headaches with blurred vision
-- Noticeable reduction in baby’s normal kick patterns
-- High fever or sudden severe swelling of face and hands
+### Important Note
+Urine colour is only one clue. Medicines, vitamins, foods, and illness can also affect colour, so persistent changes should be discussed with a clinician.
     `,
   },
   {
     id: 'article-3',
-    slug: 'malaria-prevention-and-timely-treatment',
-    title: 'Malaria Prevention & Safe Treatment in Nigerian Households',
-    summary: 'Why prompt clinical diagnosis is essential before taking medications, and how to safeguard your home environment against mosquito breeding.',
-    category: 'Infectious Diseases',
-    author: 'Primary Healthcare Board',
-    authorQualifications: 'MBBS, FMCP Clinical Team',
-    reviewDate: '28 January 2026',
-    readingTimeMinutes: 3,
-    imageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=800&auto=format&fit=crop',
+    slug: 'women-health-checks-to-prioritise',
+    title: 'Women’s Health Checks Worth Prioritising',
+    summary: 'Menstrual health, breast awareness, and cervical cancer prevention are important parts of routine women’s healthcare.',
+    category: 'Women’s Health',
+    author: 'Ihenyen Medical Centre',
+    authorQualifications: 'Patient Education',
+    reviewDate: 'Instagram education series',
+    readingTimeMinutes: 4,
+    imageUrl: 'https://images.unsplash.com/photo-1576765608622-067973a79f53?q=80&w=800&auto=format&fit=crop',
     isVerified: true,
     contentMarkdown: `
-### Why Diagnostic Confirmation Matters
-Not all fevers are malaria. Taking over-the-counter anti-malarials without a rapid diagnostic test (RDT) or microscopy can lead to drug resistance and delay treatment for other infections such as typhoid or viral illnesses.
+### Routine Care Matters
+Women’s health is not only for pregnancy. Regular conversations with a clinician can help with menstrual changes, breast concerns, cervical cancer prevention, infections, and general wellbeing.
 
-### Effective Household Prevention Strategies
-- Sleep under insecticide-treated mosquito nets (ITNs) every night.
-- Clear stagnant water receptacles around compounds and gutters where mosquitoes breed.
-- Install fitted window and door nets to minimize entry.
+### Topics to Discuss
+- Painful, heavy, irregular, or missed periods
+- Breast lumps, discharge, skin changes, or persistent pain
+- Cervical cancer prevention and screening options
+- Pregnancy planning, contraception, infections, or pelvic pain
 
-### When to Seek Emergency Attention
-In young children, malaria can progress rapidly. If a child displays high fever, persistent vomiting, refusal to feed, or convulsions, bring them immediately to our 24/7 Emergency unit.
+### When to Book a Review
+Book a consultation when symptoms are new, recurring, worsening, or affecting daily life. Early review often makes treatment simpler and less stressful.
     `,
   },
 ];
@@ -528,10 +547,10 @@ In young children, malaria can progress rapidly. If a child displays high fever,
  */
 export const trustStats: TrustStat[] = [
   {
-    id: 'stat-emergency',
-    label: 'Emergency Response',
-    value: '24/7',
-    description: 'Round-the-clock emergency medical triage and doctor presence.',
+    id: 'stat-care-scope',
+    label: 'Care Scope',
+    value: 'General + Specialist',
+    description: 'General and specialist care promoted by the hospital.',
     isVerified: true,
   },
   {

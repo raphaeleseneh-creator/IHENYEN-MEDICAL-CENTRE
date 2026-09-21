@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, AlertCircle, Activity, Heart, ShieldCheck, Scissors, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Stethoscope, AlertCircle, Activity, Heart, ShieldCheck, Scissors, Smile, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { draftServices } from '../../data/hospitalConfig';
 import { PremiumCard } from '../common/PremiumCard';
 
@@ -18,6 +18,8 @@ export const ServicesSection: React.FC = () => {
         return ShieldCheck;
       case 'Scissors':
         return Scissors;
+      case 'Smile':
+        return Smile;
       default:
         return Stethoscope;
     }
@@ -26,21 +28,19 @@ export const ServicesSection: React.FC = () => {
   return (
     <section
       id="services-section"
-      className="py-16 md:py-20 bg-[#edf5fc]/50 border-b border-[#d8e3ec]"
+      className="border-b border-[#d8e3ec] bg-[#eef7fb] py-16 md:py-24"
       aria-label="Medical Services at Ihenyen Medical Centre"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#0f6bd9] block mb-2">
-              Clinical Specialisations
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#083b78] font-heading">
+            <span className="section-kicker mb-3 block">Clinical Specialisations</span>
+            <h2 className="font-heading text-3xl font-extrabold leading-tight text-[#083b78] sm:text-4xl md:text-5xl">
               Essential healthcare services designed around you.
             </h2>
-            <p className="text-sm sm:text-base text-[#5f6f7f] mt-2">
-              From routine family medicine to 24/7 acute emergency response and maternity care, our clinical teams prioritize patient comfort and precision.
+            <p className="mt-4 text-sm leading-7 text-[#5f6f7f] sm:text-base">
+              From general consultations to women’s health, dental care, diagnostics, and urgent clinical support, our team prioritizes patient comfort and clarity.
             </p>
           </div>
 
@@ -48,13 +48,13 @@ export const ServicesSection: React.FC = () => {
             to="/services"
             className="inline-flex items-center gap-2 text-sm font-bold text-[#0f6bd9] hover:text-[#083b78] transition-colors self-start md:self-auto"
           >
-            <span>Explore all 6 service departments</span>
+            <span>Explore all {draftServices.length} service departments</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* 6 Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {draftServices.map((service) => {
             const Icon = getIcon(service.iconName);
             const isEmergency = service.id === 'emergency-care';
@@ -69,33 +69,33 @@ export const ServicesSection: React.FC = () => {
               >
                 <div>
                   {/* Top Bar: Icon + Category Badge */}
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="mb-5 flex items-center justify-between">
                     <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                      className={`flex h-12 w-12 items-center justify-center rounded-xl ${
                         isEmergency
                           ? 'bg-[#c83b3b] text-white shadow-xs'
-                          : 'bg-[#edf5fc] text-[#083b78]'
+                          : 'bg-[#eef7fb] text-[#083b78]'
                       }`}
                     >
                       <Icon className="w-6 h-6" />
                     </div>
 
-                    <span className="text-[11px] font-bold text-[#5f6f7f] bg-gray-100 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                    <span className="rounded-full bg-[#f7faf8] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#5f6f7f]">
                       {service.category}
                     </span>
                   </div>
 
                   {/* Title & Short Description */}
-                  <h3 className="text-xl font-bold text-[#083b78] mb-2 font-heading">
+                  <h3 className="font-heading mb-2 text-xl font-bold text-[#083b78]">
                     {service.title}
                   </h3>
-                  <p className="text-xs text-[#5f6f7f] leading-relaxed mb-4">
+                  <p className="mb-5 text-sm leading-6 text-[#5f6f7f]">
                     {service.shortDescription}
                   </p>
 
                   {/* Key Highlights */}
-                  <div className="space-y-2 mb-6 border-t border-[#d8e3ec]/60 pt-3">
-                    <p className="text-[11px] font-bold text-[#083b78] uppercase tracking-wider">
+                  <div className="mb-6 space-y-2 border-t border-[#d8e3ec]/60 pt-4">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#083b78]">
                       What we address:
                     </p>
                     <ul className="space-y-1.5">
@@ -110,7 +110,7 @@ export const ServicesSection: React.FC = () => {
                 </div>
 
                 {/* Card Actions */}
-                <div className="pt-4 border-t border-[#d8e3ec] flex items-center justify-between mt-auto">
+                <div className="mt-auto flex items-center justify-between border-t border-[#d8e3ec] pt-4">
                   <Link
                     to={`/services/${service.slug}`}
                     className="text-xs font-bold text-[#083b78] hover:text-[#0f6bd9] flex items-center gap-1 transition-colors"

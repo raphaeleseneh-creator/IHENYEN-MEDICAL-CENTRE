@@ -5,6 +5,8 @@ import { draftHmoList, hospitalInfo } from '../../data/hospitalConfig';
 import { PremiumCard } from '../common/PremiumCard';
 
 export const HmoSection: React.FC = () => {
+  const verifiedHmos = draftHmoList.filter((provider) => provider.isVerified);
+
   return (
     <section
       id="hmo-section"
@@ -22,7 +24,7 @@ export const HmoSection: React.FC = () => {
               HMO, NHIA & Transparent Payment Options.
             </h2>
             <p className="text-sm sm:text-base text-[#5f6f7f] leading-relaxed">
-              We partner with national, state, and private Health Maintenance Organizations (HMOs) to provide streamlined medical coverage for enrolled individuals and corporate staff.
+              Confirm your provider, plan benefits, and any required authorization before receiving care. Only hospital-approved providers are displayed on this website.
             </p>
 
             {/* Coverage Verification Process */}
@@ -76,11 +78,11 @@ export const HmoSection: React.FC = () => {
             <div className="bg-[#fbf8f2] border border-[#d8e3ec] rounded-2xl p-6 sm:p-7 shadow-sm">
               <h3 className="text-base font-bold text-[#083b78] mb-3 font-heading flex items-center justify-between">
                 <span>Accepted Insurance Providers</span>
-                <span className="text-[11px] font-medium text-[#5f6f7f]">Draft Roster</span>
+                <span className="text-[11px] font-medium text-[#5f6f7f]">Verified providers only</span>
               </h3>
 
               <div className="space-y-2.5 mb-6">
-                {draftHmoList.map((hmo) => (
+                {verifiedHmos.map((hmo) => (
                   <div
                     key={hmo.id}
                     className="p-3 bg-white rounded-xl border border-[#d8e3ec] flex items-center justify-between gap-3 text-xs"
@@ -97,6 +99,11 @@ export const HmoSection: React.FC = () => {
                     </span>
                   </div>
                 ))}
+                {verifiedHmos.length === 0 && (
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs leading-relaxed text-amber-900">
+                    The accepted-provider list is being confirmed. Please verify your plan before receiving care.
+                  </div>
+                )}
               </div>
 
               {/* Direct Billing Contact */}

@@ -5,6 +5,7 @@ import { draftServices, draftDoctors, hospitalInfo } from '../data/hospitalConfi
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { SeoHead } from '../components/common/SeoHead';
 import { AppointmentForm } from '../components/appointments/AppointmentForm';
+import { DoctorImage } from '../components/common/DoctorImage';
 
 export const ServiceDetailPage: React.FC = () => {
   const { serviceSlug } = useParams<{ serviceSlug: string }>();
@@ -15,7 +16,7 @@ export const ServiceDetailPage: React.FC = () => {
     return <Navigate to="/services" replace />;
   }
 
-  const assignedDoctors = draftDoctors.filter((doc) =>
+  const assignedDoctors = draftDoctors.filter((doc) => doc.isVerified &&
     service.availableDoctorIds.includes(doc.id)
   );
 
@@ -155,7 +156,7 @@ export const ServiceDetailPage: React.FC = () => {
                       className="p-4 rounded-xl bg-[#edf5fc]/50 border border-[#d8e3ec] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
                     >
                       <div className="flex items-center gap-3">
-                        <img
+                        <DoctorImage
                           src={doc.imageUrl}
                           alt={doc.name}
                           className="w-12 h-12 rounded-xl object-cover"

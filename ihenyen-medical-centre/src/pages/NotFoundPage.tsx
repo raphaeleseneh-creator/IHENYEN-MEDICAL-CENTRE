@@ -48,7 +48,7 @@ export const NotFoundPage: React.FC = () => {
             className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-[#c83b3b] border border-red-200 transition-colors"
           >
             <Phone className="w-4 h-4" />
-            <span>24/7 Emergency Care</span>
+            <span>Urgent Care Guidance</span>
           </Link>
         </div>
       </div>

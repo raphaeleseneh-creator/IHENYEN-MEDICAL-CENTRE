@@ -20,7 +20,7 @@ export const HealthResourcesPage: React.FC = () => {
     <div className="bg-[#fbf8f2]/30 min-h-screen pb-16">
       <SeoHead
         title="Health Resources & Medical Guides - Benin City"
-        description="Evidence-based patient healthcare guides, antenatal advice, hypertension screening tips, and malaria prevention from Ihenyen Medical Centre."
+        description="Patient healthcare guides on headaches, hydration, women’s health, and preventive care from Ihenyen Medical Centre."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">

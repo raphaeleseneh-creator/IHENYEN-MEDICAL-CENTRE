@@ -25,7 +25,7 @@ export const AboutPage: React.FC = () => {
             About Ihenyen Medical Centre
           </h1>
           <p className="text-base sm:text-lg text-[#5f6f7f] mt-3 leading-relaxed">
-            Established to deliver patient-centred clinical medicine in Benin City, Ihenyen Medical Centre provides compassionate outpatient care, diagnostic rigor, and round-the-clock emergency support.
+            Built around quality healthcare you can trust, Ihenyen Medical Centre provides compassionate general and specialist care in a serene, patient-friendly environment in Benin City.
           </p>
         </div>
 
@@ -84,10 +84,10 @@ export const AboutPage: React.FC = () => {
             <div className="space-y-2">
               <h3 className="text-sm font-bold text-[#083b78] flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#0b7a75]" />
-                <span>24/7 Accessibility</span>
+                <span>Reliable Access</span>
               </h3>
               <p className="text-xs text-[#5f6f7f] leading-relaxed">
-                Continuous doctor presence and emergency triage readiness for life's unpredictable moments.
+                Fast communication channels and clear guidance for appointments, visits, and urgent concerns.
               </p>
             </div>
 

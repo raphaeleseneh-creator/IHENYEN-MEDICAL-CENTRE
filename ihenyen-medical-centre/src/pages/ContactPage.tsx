@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, Clock, MessageSquare, Send, CheckCircle2, Navigati
 import { hospitalInfo } from '../data/hospitalConfig';
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { SeoHead } from '../components/common/SeoHead';
+import { formEndpoints, submitJson } from '../lib/submitForm';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,10 +15,34 @@ export const ContactPage: React.FC = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const updateField = (field: keyof typeof formData, value: string) => {
+    setFormData((current) => ({ ...current, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      await submitJson(formEndpoints.contact, {
+        ...formData,
+        submittedAt: new Date().toISOString(),
+        source: 'website-contact-form',
+      });
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : 'We could not send your message. Please contact the hospital directly.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -39,7 +64,7 @@ export const ContactPage: React.FC = () => {
             Get in Touch with Us
           </h1>
           <p className="text-base sm:text-lg text-[#5f6f7f] mt-3 leading-relaxed">
-            We are here to answer your questions regarding medical consultations, HMO coverage, laboratory results, or emergency assistance.
+            Call, message, or visit Ihenyen Medical Centre at 4 Jemide Drive, Off Goodwill Street, Benin City.
           </p>
         </div>
 
@@ -90,7 +115,7 @@ export const ContactPage: React.FC = () => {
                 >
                   <span className="flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 text-[#c83b3b]" />
-                    <span>24/7 Emergency Line:</span>
+                    <span>Urgent Care Guidance:</span>
                   </span>
                   <span>{hospitalInfo.contact.emergencyPhoneDisplay}</span>
                 </a>
@@ -104,6 +129,17 @@ export const ContactPage: React.FC = () => {
                     <span>General Reception:</span>
                   </span>
                   <span className="font-bold">{hospitalInfo.contact.mainPhoneDisplay}</span>
+                </a>
+
+                <a
+                  href={`tel:${hospitalInfo.contact.secondaryPhone}`}
+                  className="flex items-center justify-between p-3 rounded-xl bg-white text-[#083b78] border border-[#d8e3ec] hover:bg-[#edf5fc]/60 transition-colors font-medium"
+                >
+                  <span className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#0f6bd9]" />
+                    <span>Second Line:</span>
+                  </span>
+                  <span className="font-bold">{hospitalInfo.contact.secondaryPhoneDisplay}</span>
                 </a>
 
                 <a
@@ -166,11 +202,17 @@ export const ContactPage: React.FC = () => {
                 Send an Online Message
               </h2>
               <p className="text-xs text-[#5f6f7f] mb-6">
-                Our patient coordination desk typically responds within 2 business hours during outpatient times.
+                Online inquiries will be available after the hospital connects and approves a secure contact service.
               </p>
 
+              {!formEndpoints.contact && (
+                <div role="status" className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">
+                  <strong>Online messages are not active yet.</strong> This form will be enabled after the hospital’s secure contact service is connected. Do not enter personal or medical information here yet.
+                </div>
+              )}
+
               {submitted ? (
-                <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-3">
+                <div role="status" aria-live="polite" className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-3">
                   <CheckCircle2 className="w-10 h-10 text-[#0b7a75] mx-auto" />
                   <h3 className="text-base font-bold text-emerald-900">Message Received</h3>
                   <p className="text-xs text-emerald-800">
@@ -185,56 +227,75 @@ export const ContactPage: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <fieldset disabled={!formEndpoints.contact} className="space-y-4 disabled:opacity-60">
+                  {submitError && (
+                    <div role="alert" aria-live="assertive" className="p-3 rounded-xl border border-red-200 bg-red-50 text-xs font-medium text-red-800">
+                      {submitError}
+                    </div>
+                  )}
                   <div>
-                    <label className="block text-xs font-bold text-[#083b78] mb-1">
+                    <label htmlFor="contact-name" className="block text-xs font-bold text-[#083b78] mb-1">
                       Full Name <span className="text-[#c83b3b]">*</span>
                     </label>
                     <input
+                      id="contact-name"
+                      name="name"
                       type="text"
                       required
+                      autoComplete="name"
                       placeholder="e.g. Osas Osagie"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => updateField('name', e.currentTarget.value)}
                       className="w-full px-3.5 py-2.5 text-xs bg-white border border-[#d8e3ec] rounded-xl focus:outline-hidden focus:border-[#0f6bd9] focus:ring-1 focus:ring-[#0f6bd9]"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-[#083b78] mb-1">
+                      <label htmlFor="contact-phone" className="block text-xs font-bold text-[#083b78] mb-1">
                         Phone Number <span className="text-[#c83b3b]">*</span>
                       </label>
                       <input
+                        id="contact-phone"
+                        name="phone"
                         type="tel"
                         required
+                        autoComplete="tel"
+                        inputMode="tel"
                         placeholder="0803 000 0000"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={(e) => updateField('phone', e.currentTarget.value)}
                         className="w-full px-3.5 py-2.5 text-xs bg-white border border-[#d8e3ec] rounded-xl focus:outline-hidden focus:border-[#0f6bd9] focus:ring-1 focus:ring-[#0f6bd9]"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#083b78] mb-1">
+                      <label htmlFor="contact-email" className="block text-xs font-bold text-[#083b78] mb-1">
                         Email Address
                       </label>
                       <input
+                        id="contact-email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
+                        spellCheck={false}
                         placeholder="yourname@domain.com"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) => updateField('email', e.currentTarget.value)}
                         className="w-full px-3.5 py-2.5 text-xs bg-white border border-[#d8e3ec] rounded-xl focus:outline-hidden focus:border-[#0f6bd9] focus:ring-1 focus:ring-[#0f6bd9]"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#083b78] mb-1">
+                    <label htmlFor="contact-subject" className="block text-xs font-bold text-[#083b78] mb-1">
                       Inquiry Topic
                     </label>
                     <select
+                      id="contact-subject"
+                      name="subject"
                       value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      onChange={(e) => updateField('subject', e.currentTarget.value)}
                       className="w-full px-3.5 py-2.5 text-xs bg-white border border-[#d8e3ec] rounded-xl focus:outline-hidden focus:border-[#0f6bd9]"
                     >
                       <option>General Inquiry</option>
@@ -246,26 +307,30 @@ export const ContactPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#083b78] mb-1">
+                    <label htmlFor="contact-message" className="block text-xs font-bold text-[#083b78] mb-1">
                       Message <span className="text-[#c83b3b]">*</span>
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="message"
                       required
                       rows={4}
-                      placeholder="Please write your question or inquiry here..."
+                      placeholder="Please write your question or inquiry here…"
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) => updateField('message', e.currentTarget.value)}
                       className="w-full px-3.5 py-2.5 text-xs bg-white border border-[#d8e3ec] rounded-xl focus:outline-hidden focus:border-[#0f6bd9] focus:ring-1 focus:ring-[#0f6bd9]"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#0f6bd9] hover:bg-[#083b78] text-white text-xs font-bold transition-colors shadow-2xs"
+                    disabled={isSubmitting || !formEndpoints.contact}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#0f6bd9] hover:bg-[#083b78] text-white text-xs font-bold transition-colors shadow-2xs disabled:cursor-wait disabled:opacity-70"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Submit Inquiry</span>
+                    <span>{isSubmitting ? 'Sending Message…' : formEndpoints.contact ? 'Submit Inquiry' : 'Online Messages Coming Soon'}</span>
                   </button>
+                  </fieldset>
                 </form>
               )}
             </div>

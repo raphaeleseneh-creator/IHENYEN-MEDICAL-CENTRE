@@ -42,11 +42,18 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-white text-[#10243e] font-sans antialiased selection:bg-[#edf5fc] selection:text-[#083b78]">
+        <a
+          href="#main-content"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[#083b78] px-4 py-2 text-sm font-bold text-white shadow-lg transition-transform focus:translate-y-0"
+        >
+          Skip to main content
+        </a>
+
         {/* Top Header with Emergency Bar & Navigation */}
         <Header onOpenSearch={() => setIsSearchOpen(true)} />
 
         {/* Dynamic Route Pages */}
-        <div className="flex-1">
+        <main id="main-content" tabIndex={-1} className="flex-1 scroll-mt-28 focus:outline-none">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/services" element={<ServicesPage />} />
@@ -66,7 +73,7 @@ export default function App() {
             <Route path="/terms" element={<TermsPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        </div>
+        </main>
 
         {/* Global Footer */}
         <Footer />

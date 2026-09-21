@@ -15,9 +15,9 @@ export const WhyChooseSection: React.FC = () => {
     },
     {
       icon: Clock,
-      title: '24/7 Rapid Emergency Readiness',
+      title: 'Fast & Reliable Service',
       description:
-        'Trauma, acute medical and maternity emergencies are met with an immediate, coordinated medical response around the clock.',
+        'Patients can call ahead for quick guidance, appointment direction, and urgent care coordination.',
     },
     {
       icon: UserCheck,
@@ -36,21 +36,19 @@ export const WhyChooseSection: React.FC = () => {
   return (
     <section
       id="why-choose-section"
-      className="py-16 md:py-20 bg-[#fbf8f2] border-b border-[#d8e3ec]"
+      className="overflow-hidden border-b border-[#d8e3ec] bg-[#f7faf8] py-16 md:py-24"
       aria-label="Why Choose Ihenyen Medical Centre"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Mission & Care Pillars */}
           <div className="lg:col-span-7 space-y-6">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#0b7a75] block">
-              Patient-Centred Ethos
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#083b78] font-heading leading-tight">
+            <span className="section-kicker block text-[#0b7a75]">Patient-Centred Ethos</span>
+            <h2 className="font-heading text-3xl font-extrabold leading-tight text-[#083b78] sm:text-4xl md:text-5xl">
               A healthcare centre built on trust, clarity and genuine empathy.
             </h2>
-            <p className="text-sm sm:text-base text-[#5f6f7f] leading-relaxed">
-              At Ihenyen Medical Centre, we believe exceptional medicine begins with attentive listening. Located in Benin City, our facility is organized to provide dependable outpatient and emergency care with dignity.
+            <p className="max-w-2xl text-sm leading-7 text-[#5f6f7f] sm:text-base">
+              At Ihenyen Medical Centre, we believe exceptional medicine begins with attentive listening. Located in Benin City, our facility is organized to provide dependable general and specialist care with dignity.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
@@ -59,13 +57,13 @@ export const WhyChooseSection: React.FC = () => {
                 return (
                   <div
                     key={idx}
-                    className="p-4 bg-white rounded-xl border border-[#d8e3ec] shadow-2xs space-y-2"
+                    className="group space-y-3 rounded-2xl border border-[#d8e3ec] bg-white p-5 shadow-[0_18px_44px_-34px_rgba(8,59,120,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-[#bcd3e8]"
                   >
-                    <div className="w-9 h-9 rounded-lg bg-[#edf5fc] text-[#083b78] flex items-center justify-center">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef7fb] text-[#083b78] transition-colors group-hover:bg-[#083b78] group-hover:text-white">
                       <Icon className="w-5 h-5" />
                     </div>
                     <h3 className="text-sm font-bold text-[#083b78]">{pillar.title}</h3>
-                    <p className="text-xs text-[#5f6f7f] leading-relaxed">{pillar.description}</p>
+                    <p className="text-sm leading-6 text-[#5f6f7f]">{pillar.description}</p>
                   </div>
                 );
               })}
@@ -74,10 +72,10 @@ export const WhyChooseSection: React.FC = () => {
 
           {/* Right Column: Verified Metrics & Trust Box */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white rounded-2xl border border-[#d8e3ec] p-6 sm:p-8 shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#edf5fc] rounded-full blur-2xl pointer-events-none" />
+            <div className="relative overflow-hidden rounded-2xl border border-[#d8e3ec] bg-white p-6 shadow-[0_30px_70px_-45px_rgba(8,59,120,0.65)] sm:p-8">
+              <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-[#eef7fb] blur-2xl pointer-events-none" />
 
-              <h3 className="text-lg font-bold text-[#083b78] mb-4 font-heading flex items-center gap-2">
+              <h3 className="font-heading mb-5 flex items-center gap-2 text-lg font-bold text-[#083b78]">
                 <CheckCircle className="w-5 h-5 text-[#0b7a75]" />
                 <span>Our Clinical Standards</span>
               </h3>
@@ -86,7 +84,7 @@ export const WhyChooseSection: React.FC = () => {
                 {verifiedStats.map((stat) => (
                   <div
                     key={stat.id}
-                    className="p-4 rounded-xl bg-[#edf5fc]/60 border border-[#d8e3ec]/70 flex items-center justify-between gap-4"
+                    className="flex items-center justify-between gap-4 rounded-xl border border-[#d8e3ec]/70 bg-[#eef7fb]/70 p-4"
                   >
                     <div>
                       <p className="text-xs font-bold text-[#083b78] uppercase tracking-wider">

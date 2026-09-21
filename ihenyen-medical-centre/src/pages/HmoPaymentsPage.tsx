@@ -5,6 +5,8 @@ import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { SeoHead } from '../components/common/SeoHead';
 
 export const HmoPaymentsPage: React.FC = () => {
+  const verifiedHmos = draftHmoList.filter((provider) => provider.isVerified);
+
   return (
     <div className="bg-[#fbf8f2]/30 min-h-screen pb-16">
       <SeoHead
@@ -24,7 +26,7 @@ export const HmoPaymentsPage: React.FC = () => {
             HMO Insurance & Payment Options
           </h1>
           <p className="text-base sm:text-lg text-[#5f6f7f] mt-3 leading-relaxed">
-            We partner with national, state, and private Health Maintenance Organizations to deliver seamless medical care. For private-pay patients, we support transparent payment channels.
+            Review verified insurance information and general payment guidance before your visit. Coverage always depends on your provider, plan, and authorization status.
           </p>
         </div>
 
@@ -38,17 +40,17 @@ export const HmoPaymentsPage: React.FC = () => {
                   <ShieldCheck className="w-5 h-5 text-[#0f6bd9]" />
                   <span>Accepted Health Insurance Providers</span>
                 </h2>
-                <span className="text-xs text-[#5f6f7f] bg-gray-100 px-2.5 py-1 rounded-full font-semibold">
-                  Draft Roster
-                </span>
+                {verifiedHmos.length > 0 && <span className="text-xs text-[#5f6f7f] bg-gray-100 px-2.5 py-1 rounded-full font-semibold">
+                  {verifiedHmos.length} verified
+                </span>}
               </div>
 
               <p className="text-xs text-[#5f6f7f] mb-6">
-                Below are the primary health insurance schemes and HMO networks currently recognized by our administrative desk:
+                Only providers confirmed by the hospital administration are displayed here.
               </p>
 
               <div className="space-y-3">
-                {draftHmoList.map((hmo) => (
+                {verifiedHmos.map((hmo) => (
                   <div
                     key={hmo.id}
                     className="p-4 rounded-xl border border-[#d8e3ec] bg-[#edf5fc]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
@@ -68,6 +70,11 @@ export const HmoPaymentsPage: React.FC = () => {
                     </div>
                   </div>
                 ))}
+                {verifiedHmos.length === 0 && (
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                    The accepted-provider list is being verified. Please confirm coverage directly with the hospital before your visit or treatment.
+                  </div>
+                )}
               </div>
             </div>
 

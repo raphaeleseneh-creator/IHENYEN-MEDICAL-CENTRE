@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             <div className="p-3.5 bg-blue-900/60 rounded-xl border border-blue-700/50 flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-red-300 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-bold text-red-200 uppercase tracking-wider">24/7 Emergency Line</p>
+                <p className="text-xs font-bold text-red-200 uppercase tracking-wider">Urgent Care Guidance</p>
                 <a
                   href={`tel:${hospitalInfo.contact.emergencyPhone}`}
                   className="text-base font-extrabold text-white hover:text-blue-200 transition-colors"
@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/emergency" className="hover:text-white hover:underline transition-colors text-red-200 font-semibold">
-                  Emergency Department (24/7)
+                  Urgent Care Guidance
                 </Link>
               </li>
               <li>
@@ -126,6 +126,13 @@ export const Footer: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-blue-300 flex-shrink-0" />
+                <a href={`tel:${hospitalInfo.contact.secondaryPhone}`} className="hover:underline">
+                  {hospitalInfo.contact.secondaryPhoneDisplay}
+                </a>
+              </div>
+
+              <div className="flex items-center gap-2.5">
                 <MessageSquare className="w-4 h-4 text-emerald-300 flex-shrink-0" />
                 <a
                   href={hospitalInfo.contact.whatsappLink}
@@ -147,8 +154,8 @@ export const Footer: React.FC = () => {
               <div className="flex items-start gap-2.5 pt-1">
                 <Clock className="w-4 h-4 text-blue-300 flex-shrink-0 mt-0.5" />
                 <div className="text-xs">
-                  <p className="font-semibold text-white">Emergency: 24/7 Everyday</p>
-                  <p className="text-blue-200/80">Outpatient: Mon – Sat (8am – 7pm)</p>
+                  <p className="font-semibold text-white">Clinic hours: Call to confirm</p>
+                  <p className="text-blue-200/80">Reception: {hospitalInfo.contact.mainPhoneDisplay}</p>
                 </div>
               </div>
             </div>

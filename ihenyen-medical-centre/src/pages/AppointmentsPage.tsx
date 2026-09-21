@@ -29,7 +29,7 @@ export const AppointmentsPage: React.FC = () => {
             Book an Appointment
           </h1>
           <p className="text-base sm:text-lg text-[#5f6f7f] mt-3 leading-relaxed">
-            Request an outpatient consultation with our medical practitioners. Our patient coordination team will reach out to confirm your scheduled time slot.
+            Online appointment requests are being prepared. Please confirm contact details with the hospital before using the phone or WhatsApp options shown on this preview.
           </p>
         </div>
 

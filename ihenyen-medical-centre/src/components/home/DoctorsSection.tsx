@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight, UserCheck } from 'lucide-react';
 import { draftDoctors } from '../../data/hospitalConfig';
 import { PremiumCard } from '../common/PremiumCard';
+import { DoctorImage } from '../common/DoctorImage';
 
 export const DoctorsSection: React.FC = () => {
+  const verifiedDoctors = draftDoctors.filter((doctor) => doctor.isVerified).slice(0, 3);
+
   return (
     <section
       id="doctors-section"
@@ -37,7 +40,7 @@ export const DoctorsSection: React.FC = () => {
 
         {/* Doctors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {draftDoctors.slice(0, 3).map((doctor) => (
+          {verifiedDoctors.map((doctor) => (
             <PremiumCard
               key={doctor.id}
               id={`doctor-card-${doctor.slug}`}
@@ -46,11 +49,10 @@ export const DoctorsSection: React.FC = () => {
               <div>
                 {/* Doctor Photo with Hover Zoom */}
                 <div className="image-zoom-container h-52 w-full bg-[#edf5fc] rounded-xl mb-4 relative">
-                  <img
+                  <DoctorImage
                     src={doctor.imageUrl}
                     alt={`${doctor.name} - ${doctor.title}`}
                     className="w-full h-full object-cover object-top"
-                    loading="lazy"
                   />
                   <div className="absolute bottom-2 left-2 bg-[#083b78]/90 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
                     {doctor.department}
@@ -95,6 +97,22 @@ export const DoctorsSection: React.FC = () => {
               </div>
             </PremiumCard>
           ))}
+          {verifiedDoctors.length === 0 && (
+            <div className="md:col-span-2 lg:col-span-3 rounded-2xl border border-[#d8e3ec] bg-[#edf5fc]/50 p-6 sm:p-8">
+              <div className="flex items-start gap-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-[#0f6bd9] shadow-sm">
+                  <UserCheck className="h-5 w-5" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-[#083b78]">Clinician profiles are being verified</h3>
+                  <p className="mt-1 max-w-2xl text-sm text-[#5f6f7f]">Names, credentials, photographs, and schedules will appear here only after hospital approval.</p>
+                  <Link to="/appointments" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#0f6bd9] hover:text-[#083b78]">
+                    Request the right department <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

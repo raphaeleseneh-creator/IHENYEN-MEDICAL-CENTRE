@@ -4,12 +4,13 @@ import { Clock, Calendar, Globe2, ShieldCheck, Phone, CheckCircle2, ArrowRight, 
 import { draftDoctors, draftServices, hospitalInfo } from '../data/hospitalConfig';
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { SeoHead } from '../components/common/SeoHead';
+import { DoctorImage } from '../components/common/DoctorImage';
 import { AppointmentForm } from '../components/appointments/AppointmentForm';
 
 export const DoctorDetailPage: React.FC = () => {
   const { doctorSlug } = useParams<{ doctorSlug: string }>();
 
-  const doctor = draftDoctors.find((d) => d.slug === doctorSlug);
+  const doctor = draftDoctors.find((d) => d.slug === doctorSlug && d.isVerified);
 
   if (!doctor) {
     return <Navigate to="/doctors" replace />;
@@ -38,10 +39,11 @@ export const DoctorDetailPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-4 lg:col-span-3">
               <div className="h-64 w-full bg-[#edf5fc] rounded-2xl overflow-hidden shadow-md border-2 border-white">
-                <img
+                <DoctorImage
                   src={doctor.imageUrl}
                   alt={doctor.name}
                   className="w-full h-full object-cover object-top"
+                  loading="eager"
                 />
               </div>
             </div>

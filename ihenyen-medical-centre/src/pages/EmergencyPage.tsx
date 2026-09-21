@@ -19,27 +19,27 @@ export const EmergencyPage: React.FC = () => {
   return (
     <div className="bg-[#fbf8f2]/30 min-h-screen pb-16">
       <SeoHead
-        title="24/7 Emergency Care & Acute Trauma Response"
-        description="Round-the-clock emergency medical response and acute trauma triage at Ihenyen Medical Centre in Benin City, Edo State."
+        title="Urgent Care Guidance - Ihenyen Medical Centre"
+        description="Urgent care guidance, warning signs, phone support, and directions to Ihenyen Medical Centre in Benin City, Edo State."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <Breadcrumbs items={[{ label: '24/7 Emergency Care' }]} />
+        <Breadcrumbs items={[{ label: 'Urgent Care Guidance' }]} />
 
         {/* Top Emergency Action Banner - High contrast & immediate */}
         <div className="bg-[#c83b3b] text-white rounded-2xl p-6 sm:p-10 shadow-xl my-6 border-4 border-red-700">
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider">
               <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping" />
-              <span>Emergency Department • Open 24/7 Everyday</span>
+              <span>Urgent Care Guidance • Call Before Arrival</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-heading tracking-tight leading-tight">
-              Urgent Medical & Trauma Care
+              Urgent Medical Guidance
             </h1>
 
             <p className="text-base sm:text-lg text-red-100 leading-relaxed">
-              If someone is experiencing a life-threatening medical event, call our 24-hour emergency triage line or proceed directly to our emergency entrance in Benin City.
+              If someone is experiencing a life-threatening medical event, call immediately and proceed to the nearest emergency facility without delay.
             </p>
 
             {/* Direct Tappable Emergency Call Button */}
@@ -50,7 +50,7 @@ export const EmergencyPage: React.FC = () => {
                 id="emergency-call-cta"
               >
                 <Phone className="w-6 h-6 text-[#c83b3b]" />
-                <span>Call Emergency: {hospitalInfo.contact.emergencyPhoneDisplay}</span>
+                <span>Call Now: {hospitalInfo.contact.emergencyPhoneDisplay}</span>
               </a>
 
               <a
@@ -60,7 +60,7 @@ export const EmergencyPage: React.FC = () => {
                 className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-red-900/80 hover:bg-red-900 text-white text-sm font-bold border border-red-400/40 transition-colors"
               >
                 <Navigation className="w-4 h-4" />
-                <span>Get Immediate GPS Directions</span>
+                <span>Get GPS Directions</span>
               </a>
             </div>
           </div>
@@ -95,10 +95,10 @@ export const EmergencyPage: React.FC = () => {
             {/* 2. What Happens Upon Arrival (Emergency Triage Protocol) */}
             <div className="bg-white border border-[#d8e3ec] rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
               <h2 className="text-xl font-bold text-[#083b78] font-heading">
-                Emergency Triage: What to Expect Upon Arrival
+                Urgent Visit: What to Expect Upon Arrival
               </h2>
               <p className="text-xs text-[#5f6f7f]">
-                Our emergency unit uses a clinical acuity triage system to ensure critical patients receive immediate life-saving care without administrative delays:
+                The clinical team will assess the patient, check vital signs, and advise on the safest next step based on severity:
               </p>
 
               <div className="space-y-3">
@@ -107,9 +107,9 @@ export const EmergencyPage: React.FC = () => {
                     1
                   </span>
                   <div>
-                    <h3 className="text-xs font-bold text-[#083b78] uppercase">Immediate Clinical Triage</h3>
+                    <h3 className="text-xs font-bold text-[#083b78] uppercase">Clinical Assessment</h3>
                     <p className="text-xs text-[#5f6f7f] mt-0.5">
-                      Emergency nursing officers check vital signs (Oxygen, BP, pulse, temperature) within seconds of arrival.
+                      Staff review the patient’s complaint and check vital signs such as oxygen level, blood pressure, pulse, and temperature.
                     </p>
                   </div>
                 </div>
@@ -119,9 +119,9 @@ export const EmergencyPage: React.FC = () => {
                     2
                   </span>
                   <div>
-                    <h3 className="text-xs font-bold text-[#083b78] uppercase">Doctor Examination & Resuscitation</h3>
+                    <h3 className="text-xs font-bold text-[#083b78] uppercase">Doctor Review & Stabilisation</h3>
                     <p className="text-xs text-[#5f6f7f] mt-0.5">
-                      Emergency medical officer initiates urgent stabilization, IV access, oxygen therapy, or trauma care.
+                      A clinician reviews the case and begins appropriate care or stabilisation when needed.
                     </p>
                   </div>
                 </div>
@@ -131,9 +131,9 @@ export const EmergencyPage: React.FC = () => {
                     3
                   </span>
                   <div>
-                    <h3 className="text-xs font-bold text-[#083b78] uppercase">Priority Diagnostics & Theatre Ready</h3>
+                    <h3 className="text-xs font-bold text-[#083b78] uppercase">Diagnostics & Next-Step Guidance</h3>
                     <p className="text-xs text-[#5f6f7f] mt-0.5">
-                      Direct access to 24/7 on-site emergency lab, ultrasound, and surgical theatre if acute surgery is required.
+                      The team may recommend diagnostics, observation, referral, or transfer depending on the patient’s condition.
                     </p>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export const EmergencyPage: React.FC = () => {
             <div className="bg-white border border-[#d8e3ec] rounded-2xl p-6 shadow-sm space-y-4">
               <div className="flex items-center gap-2 text-xs font-bold text-[#0f6bd9] uppercase tracking-wider">
                 <MapPin className="w-4 h-4" />
-                <span>Emergency Entrance Location</span>
+                <span>Hospital Location</span>
               </div>
 
               <div>
@@ -177,10 +177,10 @@ export const EmergencyPage: React.FC = () => {
             {/* Inpatient Admission Info */}
             <div className="bg-white border border-[#d8e3ec] rounded-2xl p-6 shadow-sm space-y-3">
               <h3 className="text-sm font-bold text-[#083b78] uppercase tracking-wider">
-                Emergency Inquiries & Ambulatory Desk
+                Urgent Inquiries & Reception Desk
               </h3>
               <p className="text-xs text-[#5f6f7f]">
-                Our triage officers are in continuous communication with ambulance drivers and incoming patient families.
+                Call reception before arrival when possible so the team can guide you on the next step.
               </p>
               <div className="p-3 bg-[#edf5fc] rounded-xl text-xs text-[#083b78] font-mono">
                 Reception Desk: {hospitalInfo.contact.mainPhoneDisplay}

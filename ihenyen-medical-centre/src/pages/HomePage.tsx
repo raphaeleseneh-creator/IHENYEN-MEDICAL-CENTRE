@@ -16,7 +16,7 @@ export const HomePage: React.FC = () => {
     <>
       <SeoHead
         title="Dependable Medical Care in Benin City"
-        description="Ihenyen Medical Centre offers compassionate healthcare services, 24/7 emergency care, maternity, diagnostics, and paediatric medicine in Benin City, Nigeria."
+        description="Ihenyen Medical Centre offers general and specialist care, women’s health, dental care, diagnostics, and paediatric support in Benin City, Nigeria."
       />
       <main id="main-content">
         {/* 1. Hero Section */}

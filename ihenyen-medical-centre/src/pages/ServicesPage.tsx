@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, AlertCircle, Activity, Heart, ShieldCheck, Scissors, ArrowRight, CheckCircle2, Calendar } from 'lucide-react';
+import { Stethoscope, AlertCircle, Activity, Heart, ShieldCheck, Scissors, Smile, ArrowRight, CheckCircle2, Calendar } from 'lucide-react';
 import { draftServices } from '../data/hospitalConfig';
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { SeoHead } from '../components/common/SeoHead';
@@ -19,6 +19,8 @@ export const ServicesPage: React.FC = () => {
         return ShieldCheck;
       case 'Scissors':
         return Scissors;
+      case 'Smile':
+        return Smile;
       default:
         return Stethoscope;
     }
@@ -28,7 +30,7 @@ export const ServicesPage: React.FC = () => {
     <div className="bg-[#fbf8f2]/40 min-h-screen pb-16">
       <SeoHead
         title="Medical Services & Clinical Departments"
-        description="Explore medical services at Ihenyen Medical Centre: General medicine, 24/7 emergency care, maternity, diagnostics, paediatric health, and surgical care in Benin City."
+        description="Explore medical services at Ihenyen Medical Centre: general medicine, specialist care, women’s health, dental care, diagnostics, paediatric health, and urgent support in Benin City."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
@@ -43,7 +45,7 @@ export const ServicesPage: React.FC = () => {
             Medical Services & Specialisations
           </h1>
           <p className="text-base sm:text-lg text-[#5f6f7f] mt-3 leading-relaxed">
-            Ihenyen Medical Centre offers dedicated clinical departments organized to deliver attentive primary consultations, timely diagnostics, safe maternity support, and 24/7 acute trauma response in Benin City.
+            Ihenyen Medical Centre offers dedicated clinical services organized around attentive consultations, timely diagnostics, women’s health, dental care, paediatric support, and urgent clinical guidance in Benin City.
           </p>
         </div>
 
@@ -119,10 +121,6 @@ export const ServicesPage: React.FC = () => {
           })}
         </div>
 
-        {/* Verification & Administrative Notice */}
-        <div className="p-4 bg-white border border-[#d8e3ec] rounded-xl text-xs text-[#5f6f7f] max-w-3xl">
-          <span className="font-bold text-[#083b78]">Service Verification Status:</span> Draft medical service classifications are configured for hospital launch. Specialist schedules and diagnostic test listings are subject to clinical administrative updates.
-        </div>
       </div>
     </div>
   );

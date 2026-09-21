@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, Calendar, ArrowRight, Filter, Search, UserCheck } from 'lucide-react';
+import { Clock, Calendar, ArrowRight, Filter, UserCheck } from 'lucide-react';
 import { draftDoctors } from '../data/hospitalConfig';
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { SeoHead } from '../components/common/SeoHead';
 import { PremiumCard } from '../components/common/PremiumCard';
+import { DoctorImage } from '../components/common/DoctorImage';
 
 export const DoctorsPage: React.FC = () => {
   const [selectedDept, setSelectedDept] = useState<string>('All');
+  const verifiedDoctors = draftDoctors.filter((doctor) => doctor.isVerified);
 
-  const departments = ['All', ...Array.from(new Set(draftDoctors.map((d) => d.department)))];
+  const departments = ['All', ...Array.from(new Set(verifiedDoctors.map((d) => d.department)))];
 
   const filteredDoctors =
     selectedDept === 'All'
-      ? draftDoctors
-      : draftDoctors.filter((d) => d.department === selectedDept);
+      ? verifiedDoctors
+      : verifiedDoctors.filter((d) => d.department === selectedDept);
 
   return (
     <div className="bg-[#fbf8f2]/40 min-h-screen pb-16">
@@ -40,7 +42,7 @@ export const DoctorsPage: React.FC = () => {
         </div>
 
         {/* Department Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-[#d8e3ec]">
+        {verifiedDoctors.length > 0 && <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-[#d8e3ec]">
           <span className="text-xs font-bold text-[#083b78] uppercase tracking-wider mr-2 flex items-center gap-1">
             <Filter className="w-3.5 h-3.5 text-[#0f6bd9]" />
             <span>Filter:</span>
@@ -58,10 +60,10 @@ export const DoctorsPage: React.FC = () => {
               {dept}
             </button>
           ))}
-        </div>
+        </div>}
 
         {/* Doctors Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {verifiedDoctors.length > 0 ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredDoctors.map((doctor) => (
             <PremiumCard
               key={doctor.id}
@@ -70,11 +72,10 @@ export const DoctorsPage: React.FC = () => {
             >
               <div>
                 <div className="image-zoom-container h-56 w-full bg-[#edf5fc] rounded-xl mb-4 relative">
-                  <img
+                  <DoctorImage
                     src={doctor.imageUrl}
                     alt={`${doctor.name} - ${doctor.title}`}
                     className="w-full h-full object-cover object-top"
-                    loading="lazy"
                   />
                   <div className="absolute bottom-2 left-2 bg-[#083b78]/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
                     {doctor.department}
@@ -116,12 +117,20 @@ export const DoctorsPage: React.FC = () => {
               </div>
             </PremiumCard>
           ))}
-        </div>
-
-        {/* Verification notice */}
-        <div className="p-4 bg-white border border-[#d8e3ec] rounded-xl text-xs text-[#5f6f7f] max-w-3xl">
-          <span className="font-bold text-[#083b78]">Clinical Notice:</span> Doctor profiles shown are structured placeholders for the hospital launch. Clinical certifications and exact duty rosters will be verified with the Medical Advisory Committee.
-        </div>
+        </div> : (
+          <div className="max-w-3xl rounded-2xl border border-[#d8e3ec] bg-white p-8 sm:p-10 shadow-sm">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#edf5fc] text-[#0f6bd9]">
+              <UserCheck className="h-6 w-6" aria-hidden="true" />
+            </div>
+            <h2 className="text-2xl font-extrabold text-[#083b78]">Verified clinician profiles are being prepared</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#5f6f7f]">
+              We only publish a clinician’s name, credentials, photograph, and schedule after administrative approval. Please use the appointment page to request the appropriate department in the meantime.
+            </p>
+            <Link to="/appointments" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#0f6bd9] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#083b78]">
+              Request an Appointment <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

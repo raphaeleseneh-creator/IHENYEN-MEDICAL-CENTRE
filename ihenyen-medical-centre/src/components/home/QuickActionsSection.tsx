@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { AlertCircle, Calendar, Stethoscope, Navigation, ArrowRight } from 'lucide-react';
-import { hospitalInfo } from '../../data/hospitalConfig';
+import { draftServices, hospitalInfo } from '../../data/hospitalConfig';
 
 export const QuickActionsSection: React.FC = () => {
   const quickActions = [
     {
       id: 'action-emergency',
-      title: 'Emergency Care',
-      subtitle: 'Available 24/7',
-      description: 'Immediate medical attention for acute trauma, critical illness, and urgent crises.',
+      title: 'Urgent Care Guidance',
+      subtitle: 'Call before arrival',
+      description: 'Quick phone guidance for sudden severe symptoms, injuries, and urgent clinical concerns.',
       link: '/emergency',
       icon: AlertCircle,
       iconBg: 'bg-red-50 text-[#c83b3b]',
       hoverBorder: 'hover:border-red-300',
-      badge: 'Open 24/7',
+      badge: 'Call Now',
       badgeClass: 'bg-red-100/80 text-red-800',
       isEmergency: true,
     },
@@ -35,12 +36,12 @@ export const QuickActionsSection: React.FC = () => {
       id: 'action-services',
       title: 'Find a Service',
       subtitle: 'Comprehensive care',
-      description: 'Explore diagnostic laboratory tests, maternity suites, and surgical care.',
+      description: 'Explore general care, women’s health, dental care, diagnostics, and paediatric support.',
       link: '/services',
       icon: Stethoscope,
       iconBg: 'bg-teal-50 text-[#0b7a75]',
       hoverBorder: 'hover:border-[#0b7a75]',
-      badge: '6 Departments',
+      badge: `${draftServices.length} Departments`,
       badgeClass: 'bg-teal-50 text-[#0b7a75]',
       isEmergency: false,
     },
@@ -48,7 +49,7 @@ export const QuickActionsSection: React.FC = () => {
       id: 'action-directions',
       title: 'Get Directions',
       subtitle: 'Visit our centre',
-      description: 'Easily locate our centre in Benin City, 3 mins from Ring Road & Central Plaza.',
+      description: 'Find us at 4 Jemide Drive, Off Goodwill Street, Benin City.',
       link: hospitalInfo.address.googleMapsUrl,
       isExternal: true,
       icon: Navigation,
@@ -63,35 +64,42 @@ export const QuickActionsSection: React.FC = () => {
   return (
     <section
       id="quick-actions-section"
-      className="py-10 sm:py-12 bg-white relative z-20 border-b border-[#d8e3ec]"
+      className="relative z-20 border-b border-[#d8e3ec] bg-white py-12 sm:py-14"
       aria-label="Quick Patient Actions"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#edf5fc] rounded-full text-[#0f6bd9] text-xs font-bold uppercase tracking-wider mb-2">
-            <span>Immediate Patient Access</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#083b78] font-heading">
-            How can we assist you today?
+        <div className="mx-auto mb-9 max-w-3xl text-center">
+          <p className="section-kicker mb-3">Immediate Patient Access</p>
+          <h2 className="font-heading text-3xl font-extrabold leading-tight text-[#083b78] sm:text-4xl">
+            Choose the right next step in seconds.
           </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#5f6f7f] sm:text-base">
+            Fast routes for urgent guidance, appointments, services and directions to the centre.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {quickActions.map((action) => {
+          {quickActions.map((action, index) => {
             const Icon = action.icon;
             const cardContent = (
-              <div className={`action-card p-5 sm:p-6 flex flex-col justify-between h-full group ${action.hoverBorder}`}>
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className={`action-card group flex h-full flex-col justify-between p-5 sm:p-6 ${action.hoverBorder}`}
+              >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-xl transition-transform group-hover:scale-105 ${action.iconBg}`}>
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-xl text-xl font-bold transition-transform group-hover:scale-105 ${action.iconBg}`}>
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${action.badgeClass}`}>
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${action.badgeClass}`}>
                       {action.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-base sm:text-lg text-[#083b78] font-heading group-hover:text-[#0f6bd9] transition-colors">
+                  <h3 className="font-heading text-base font-bold text-[#083b78] transition-colors group-hover:text-[#0d5cbd] sm:text-lg">
                     {action.title}
                   </h3>
                   <div className="text-xs font-medium text-[#5f6f7f] mb-2">{action.subtitle}</div>
@@ -105,10 +113,10 @@ export const QuickActionsSection: React.FC = () => {
                       : 'text-[#0f6bd9] group-hover:text-[#083b78]'
                   }`}
                 >
-                  <span>{action.isEmergency ? 'Access 24/7 Triage' : 'Proceed'}</span>
+                  <span>{action.isEmergency ? 'Call for Guidance' : 'Proceed'}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </div>
-              </div>
+              </motion.div>
             );
 
             if (action.isExternal) {
