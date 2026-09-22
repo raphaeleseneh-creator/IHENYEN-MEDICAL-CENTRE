@@ -39,7 +39,7 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-white text-[#10243e] font-sans antialiased selection:bg-[#edf5fc] selection:text-[#083b78]">
         <a
@@ -48,6 +48,12 @@ export default function App() {
         >
           Skip to main content
         </a>
+
+        {import.meta.env.VITE_PREVIEW_SITE === 'true' && (
+          <div className="bg-[#fff4d6] px-4 py-2 text-center text-sm font-semibold text-[#573d0b]">
+            Website preview: hospital details are awaiting confirmation. Do not use this site for urgent care or submit patient information.
+          </div>
+        )}
 
         {/* Top Header with Emergency Bar & Navigation */}
         <Header onOpenSearch={() => setIsSearchOpen(true)} />

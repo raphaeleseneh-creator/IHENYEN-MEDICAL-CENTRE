@@ -23,7 +23,7 @@ export const HospitalLogo: React.FC<HospitalLogoProps> = ({
       id="hospital-brand-logo"
     >
       <img
-        src="/images/ihenyen-medical-centre-logo.png"
+        src={`${import.meta.env.BASE_URL}images/ihenyen-medical-centre-logo.png`}
         alt="Ihenyen Medical Centre"
         width={1692}
         height={930}
